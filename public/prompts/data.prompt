@@ -8,7 +8,11 @@ current state:
 {
   "counter": 1,
   "prompt": "",
-  "questions": [{}]
+  "questions": [
+    {
+      choices: [{}]
+    }
+  ]
 }
 
 prompt: The sky is blue.
@@ -35,9 +39,7 @@ new state:
       "text": "yellow",
       "correct": false,
       "selected": false
-    }],
-    "answer": "blue",
-    "correct": true
+    }]
   }]
 }
 
