@@ -4,13 +4,13 @@ import Question from "./Components/Question";
 import QuestionList from "./Components/QuestionList";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const OPENAI_API_KEY = "";
 
 const DEFAULT_PARAMS = {
-  model: "text-davinci-003",
+  model: "gpt-3.5-turbo",
   temperature: 0.3,
   max_tokens: 800,
   top_p: 1,
@@ -20,7 +20,7 @@ const DEFAULT_PARAMS = {
 
 function Loading() {
   return (
-    <Box sx={{ width: '100%', marginTop: "10px" }}>
+    <Box sx={{ width: "100%", marginTop: "10px" }}>
       <LinearProgress />
     </Box>
   );
@@ -82,7 +82,10 @@ function App() {
         console.log(prompt);
         setLoading(true);
 
-        const params = { ...DEFAULT_PARAMS, prompt: prompt };
+        const params = {
+          ...DEFAULT_PARAMS,
+          messages: [{ role: "user", content: prompt }],
+        };
 
         const requestOptions = {
           method: "POST",
@@ -92,13 +95,14 @@ function App() {
           },
           body: JSON.stringify(params),
         };
-        fetch("https://api.openai.com/v1/completions", requestOptions)
+        fetch("https://api.openai.com/v1/chat/completions", requestOptions)
           .then((response) => response.json())
           .then((data) => {
             console.log("data", data);
-            const text = data.choices[0].text;
+            const text = data.choices[0].message.content;
             console.log(text);
-            const new_state = JSON.parse(text);
+            // replace ' with " to make it valid JSON
+            const new_state = JSON.parse(text.replace(/'/g, '"'));
             console.log(new_state);
             setState(new_state, () => {
               console.log(state);

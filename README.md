@@ -9,7 +9,7 @@ SocratesGPT generates questions about a given text. Pass in the synopsis of your
 The [testing effect](https://en.wikipedia.org/wiki/Testing_effect) shows that testing yourself on material you're trying to learn is one of the best ways to retain information. LLMs have the potential to help us become more effective learners. 
 
 ## How does it work?
-The entire "backend" of this app is a prompt, found in `public/prompts/data.prompt`. We ask the model to impersonate Socrates, and generate questions based on the given text. We also provide a data model it should use to return the response in, which includes the source text, generated questions, and options, in JSON format. We're then able to parse the json and render it in the React front end. If you ask for another question, we update the prompt with the previous state of questions already asked and options selected and pass it back to the model.
+The entire "backend" of this app is a prompt, found in `public/prompts/data.prompt`. We ask the model to impersonate Socrates, and generate questions based on the given text. We also provide a data model it should use to return the response in, which includes the source text, generated questions, and options, in JSON format. We're then able to parse the json and render it in the React front end. If you ask for another question, we update the prompt with the previous state of questions already asked and options selected and pass it back to the model. The app currently uses the `gpt-3.5-turbo` chat completions model from OpenAI.
 
 Creating a traditional backend to power an app like this without the use of LLMs would be highly non-trivial. 
 
